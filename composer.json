@@ -1,0 +1,14 @@
+{
+  "name": "kenprice/json-tables",
+  "description": "Generate Tables from a JSON Table Schema",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ken Price",
+      "email": "kenaprice@gmail.com"
+    }
+  ],
+  "autoload": {
+    "classmap" : [ "src/" ]
+  }
+}
