@@ -18,16 +18,12 @@ class Schema
     public function __construct(string $jsonSchema)
     {
         $dictSchema = json_decode($jsonSchema, true);
-        $this->_tables = [];
 
         if (!$dictSchema) {
             throw new \Exception("Invalid JSON.");
         }
 
-        foreach ($dictSchema["tables"] as $dictTable) {
-            $table = new Table($dictTable);
-            array_push($this->_tables, $table);
-        }
+        $this->populateTables($dictSchema);
     }
 
     /**
@@ -36,6 +32,19 @@ class Schema
     public function getTables()
     {
         return $this->_tables;
+    }
+
+    /**
+     * Populates tables with Table objects from parsed JSON schema
+     * @param array $dictSchema
+     */
+    private function populateTables(array $dictSchema)
+    {
+        $this->_tables = [];
+        foreach ($dictSchema["tables"] as $dictTable) {
+            $table = new Table($dictTable);
+            array_push($this->_tables, $table);
+        }
     }
 }
 
