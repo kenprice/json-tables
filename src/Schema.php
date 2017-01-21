@@ -20,7 +20,7 @@ class Schema
         $dictSchema = json_decode($jsonSchema, true);
 
         if (!$dictSchema) {
-            throw new InvalidJsonException("Invalid JSON.");
+            throw new Exceptions\InvalidJsonException("Invalid JSON.");
         }
 
         $this->populateTables($dictSchema);

@@ -7,8 +7,8 @@ class SchemaTest extends PHPUnit_Framework_TestCase
 {
     public function testThrowsExceptionOnInvalidJson()
     {
-        $this->expectException(\JsonTables\InvalidJsonException::class);
+        $this->expectException(JsonTables\Exceptions\InvalidJsonException::class);
         $jsonSchema = '{ "badJson": }';
-        $schema = new Schema($jsonSchema);
+        new Schema($jsonSchema);
     }
 }

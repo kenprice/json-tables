@@ -1,6 +1,6 @@
 <?php
 
-namespace JsonTables;
+namespace JsonTables\Exceptions;
 
 /**
  * Indicates that an invalid JSON string was attempting to be used.
