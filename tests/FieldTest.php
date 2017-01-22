@@ -1,6 +1,6 @@
 <?php
 
-use JsonTables\Field;
+use JsonTables\Schema\Field;
 use PHPUnit\Framework\TestCase;
 
 class FieldTest extends PHPUnit_Framework_TestCase
