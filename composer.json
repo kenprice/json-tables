@@ -13,6 +13,9 @@
       "src/"
     ]
   },
+  "require": {
+    "marc-mabe/php-enum": "2.3.*"
+  },
   "require-dev": {
     "phpunit/phpunit": "5.7.*"
   },
