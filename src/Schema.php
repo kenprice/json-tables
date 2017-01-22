@@ -13,7 +13,7 @@ class Schema
     /**
      * Schema constructor.
      * @param string $jsonSchema
-     * @throws \Exception
+     * @throws Exceptions\InvalidJsonException
      */
     public function __construct(string $jsonSchema)
     {
