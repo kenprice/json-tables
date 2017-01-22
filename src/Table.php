@@ -4,7 +4,6 @@ namespace JsonTables;
 
 /**
  * Class Table
- * @package JsonTables
  */
 class Table
 {
@@ -36,7 +35,6 @@ class Table
             $this->foreignKeys = $dictTable["foreignKeys"];
         }
     }
-
 
     /**
      * Populates fields with Field objects from table fields in parsed JSON schema

@@ -37,9 +37,9 @@ class StringHelper
     public static function parseBool(string $str)
     {
         return filter_var(
-                $str,
-                FILTER_VALIDATE_BOOLEAN,
-                FILTER_NULL_ON_FAILURE
-            );
+            $str,
+            FILTER_VALIDATE_BOOLEAN,
+            FILTER_NULL_ON_FAILURE
+        );
     }
 }
