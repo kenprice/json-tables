@@ -2,6 +2,8 @@
 
 namespace JsonTables;
 
+use JsonTables\Helpers\StringHelper;
+
 /**
  * Class Field
  */
@@ -52,7 +54,7 @@ class Field
 
     private function validateName()
     {
-        if (!preg_match('/^[\w\-]+$/', $this->name)) {
+        if (!StringHelper::stringIsAlphaNumDashUnderscore($this->name)) {
             throw new Exceptions\InvalidSchemaException('"name" must be alphanumeric with dash or underscore.');
         }
     }
