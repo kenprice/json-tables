@@ -4,7 +4,6 @@ namespace JsonTables;
 
 /**
  * Class Field
- * @package JsonTables
  */
 class Field
 {
@@ -41,6 +40,27 @@ class Field
         }
         if (array_key_exists("constraints", $dictField)) {
             $this->constraints = $dictField["constraints"];
+        }
+        $this->validate();
+    }
+
+    private function validate()
+    {
+        $this->validateName();
+        $this->validateType();
+    }
+
+    private function validateName()
+    {
+        if (!preg_match('/^[\w\-]+$/', $this->name)) {
+            throw new Exceptions\InvalidSchemaException('"name" must be alphanumeric with dash or underscore.');
+        }
+    }
+
+    private function validateType()
+    {
+        if (!FieldTypeEnum::has($this->type)) {
+            throw new Exceptions\InvalidSchemaException('"type" is invalid.');
         }
     }
 }
