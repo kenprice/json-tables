@@ -29,8 +29,12 @@ class Table
         }
         $this->name = $dictTable["name"];
         $this->populateFields($dictTable["fields"]);
-        $this->primaryKey = $dictTable["primaryKey"];
-        $this->foreignKeys = $dictTable["foreignKeys"];
+        if (array_key_exists("primaryKey", $dictTable)) {
+            $this->primaryKey = $dictTable["primaryKey"];
+        }
+        if (array_key_exists("foreignKeys", $dictTable)) {
+            $this->foreignKeys = $dictTable["foreignKeys"];
+        }
     }
 
 

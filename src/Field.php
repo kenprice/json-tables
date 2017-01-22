@@ -29,10 +29,18 @@ class Field
             throw new Exceptions\InvalidSchemaException('"type" is required.');
         }
         $this->name = $dictField["name"];
-        $this->title = $dictField["title"];
         $this->type = $dictField["type"];
-        $this->format = $dictField["format"];
-        $this->description = $dictField["description"];
-        $this->constraints = $dictField["constraints"];
+        if (array_key_exists("title", $dictField)) {
+            $this->title = $dictField["title"];
+        }
+        if (array_key_exists("format", $dictField)) {
+            $this->format = $dictField["format"];
+        }
+        if (array_key_exists("descriptions", $dictField)) {
+            $this->description = $dictField["description"];
+        }
+        if (array_key_exists("constraints", $dictField)) {
+            $this->constraints = $dictField["constraints"];
+        }
     }
 }
