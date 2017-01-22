@@ -13,10 +13,14 @@
       "src/"
     ]
   },
+  "require": {
+    "marc-mabe/php-enum": "2.3.*"
+  },
   "require-dev": {
     "phpunit/phpunit": "5.7.*"
   },
   "scripts": {
-    "phpunit": "phpunit --bootstrap vendor/autoload.php tests/"
+    "phpunit": "phpunit --bootstrap vendor/autoload.php tests/",
+    "phpcs": "phpcs --standard=Zend src/"
   }
 }
