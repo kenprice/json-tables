@@ -17,6 +17,7 @@
     "phpunit/phpunit": "5.7.*"
   },
   "scripts": {
-    "phpunit": "phpunit --bootstrap vendor/autoload.php tests/"
+    "phpunit": "phpunit --bootstrap vendor/autoload.php tests/",
+    "phpcs": "phpcs --standard=ruleset.xml src/ tests/"
   }
 }
