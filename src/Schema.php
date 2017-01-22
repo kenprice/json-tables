@@ -37,10 +37,14 @@ class Schema
     /**
      * Populates tables with Table objects from parsed JSON schema
      * @param array $dictSchema
+     * @throws Exceptions\InvalidSchemaException
      */
     private function populateTables(array $dictSchema)
     {
         $this->_tables = [];
+        if (!array_key_exists("tables", $dictSchema)) {
+            throw new Exceptions\InvalidSchemaException('"tables" is required.');
+        }
         foreach ($dictSchema["tables"] as $dictTable) {
             $table = new Table($dictTable);
             array_push($this->_tables, $table);
