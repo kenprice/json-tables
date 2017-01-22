@@ -51,7 +51,7 @@
         {
           "name": "user_id",
           "title": "User ID",
-          "type": "int",
+          "type": "integer",
           "description": "ID of the user that owns this post"
         },
         {
