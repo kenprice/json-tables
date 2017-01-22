@@ -21,6 +21,6 @@
   },
   "scripts": {
     "phpunit": "phpunit --bootstrap vendor/autoload.php tests/",
-    "phpcs": "phpcs --standard=Zend src/"
+    "phpcs": "phpcs --standard=ruleset.xml src/ tests/"
   }
 }
