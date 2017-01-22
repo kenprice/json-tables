@@ -11,4 +11,12 @@ class SchemaTest extends PHPUnit_Framework_TestCase
         $jsonSchema = '{ "badJson": }';
         new Schema($jsonSchema);
     }
+
+    public function testShouldPopulateTablesGivenValidJsonTableSchemaWithTwoTables()
+    {
+        $jsonSchema = file_get_contents("tests/test-schemas/UsersAndPosts.json");
+        $schema = new JsonTables\Schema($jsonSchema);
+        $tables = $schema->getTables();
+        $this->assertCount(2, $tables);
+    }
 }
