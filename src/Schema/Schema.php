@@ -1,7 +1,9 @@
 <?php
 
 namespace JsonTables\Schema;
+
 use JsonTables\Exceptions;
+use JsonTables\Notification;
 
 /**
  * Class Schema
@@ -50,6 +52,24 @@ class Schema
             $table = new Table($dictTable);
             array_push($this->_tables, $table);
         }
+    }
+
+    public function check()
+    {
+        if ($this->validation()->hasErrors()) {
+            throw new Exceptions\InvalidSchemaException(
+                $this->validation()->errorMessages('Invalid Schema')
+            );
+        }
+    }
+
+    public function validation()
+    {
+        $note = new Notification();
+        if ($this->_tables === null) {
+            $note->addError('"tables" is required.');
+        }
+        return $note;
     }
 }
 
