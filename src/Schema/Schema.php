@@ -2,7 +2,6 @@
 
 namespace JsonTables\Schema;
 use JsonTables\Exceptions;
-use JsonTables\Schema\Table;
 
 /**
  * Class Schema

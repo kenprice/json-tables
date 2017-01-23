@@ -2,7 +2,6 @@
 
 namespace JsonTables\Schema;
 
-use JsonTables\Schema\ConstraintTypeEnum;
 use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
 
