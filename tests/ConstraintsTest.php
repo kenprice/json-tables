@@ -1,6 +1,6 @@
 <?php
 
-use JsonTables\Constraints;
+use JsonTables\Schema\Constraints;
 
 class ConstraintsTest extends PHPUnit_Framework_TestCase
 {

@@ -1,6 +1,7 @@
 <?php
 
-namespace JsonTables;
+namespace JsonTables\Schema;
+use JsonTables\Exceptions;
 
 /**
  * Class Schema

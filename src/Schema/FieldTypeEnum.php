@@ -1,6 +1,6 @@
 <?php
 
-namespace JsonTables;
+namespace JsonTables\Schema;
 
 use MabeEnum\Enum;
 

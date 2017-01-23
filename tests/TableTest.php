@@ -1,6 +1,6 @@
 <?php
 
-use JsonTables\Table;
+use JsonTables\Schema\Table;
 use PHPUnit\Framework\TestCase;
 
 class TableTest extends PHPUnit_Framework_TestCase

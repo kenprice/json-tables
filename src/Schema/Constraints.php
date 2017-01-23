@@ -1,7 +1,8 @@
 <?php
 
-namespace JsonTables;
+namespace JsonTables\Schema;
 
+use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
 
 class Constraints
