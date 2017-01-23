@@ -66,8 +66,12 @@ class Schema
     public function validation()
     {
         $note = new Notification();
-        if ($this->_tables === null) {
+        if (empty($this->_tables)) {
             $note->addError('"tables" is required.');
+        } else {
+            foreach ($this->_tables as $table) {
+                $table->validation($note);
+            }
         }
         return $note;
     }

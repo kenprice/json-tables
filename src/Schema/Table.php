@@ -4,16 +4,17 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Notification;
+use JsonTables\Helpers\StringHelper;
 
 /**
  * Class Table
  */
 class Table
 {
-    public $name;
-    public $fields;
-    public $primaryKey;
-    public $foreignKeys;
+    private $_name;
+    private $_fields;
+    private $_primaryKeys;
+    private $_foreignKeys;
 
     /**
      * Table constructor.
@@ -23,16 +24,16 @@ class Table
     public function __construct(array $dictTable)
     {
         if (array_key_exists("name", $dictTable)) {
-            $this->name = $dictTable["name"];
+            $this->_name = $dictTable["name"];
         }
         if (array_key_exists("fields", $dictTable)) {
             $this->populateFields($dictTable["fields"]);
         }
         if (array_key_exists("primaryKey", $dictTable)) {
-            $this->primaryKey = $dictTable["primaryKey"];
+            $this->_primaryKeys = $dictTable["primaryKey"];
         }
         if (array_key_exists("foreignKeys", $dictTable)) {
-            $this->foreignKeys = $dictTable["foreignKeys"];
+            $this->_foreignKeys = $dictTable["foreignKeys"];
         }
     }
 
@@ -42,10 +43,10 @@ class Table
      */
     private function populateFields(array $dictFields)
     {
-        $this->fields = [];
+        $this->_fields = [];
         foreach ($dictFields as $dictField) {
             $field = new Field($dictField);
-            array_push($this->fields, $field);
+            array_push($this->_fields, $field);
         }
     }
 
@@ -58,17 +59,21 @@ class Table
         }
     }
 
-    public function validation()
+    public function validation($note = null)
     {
-        $note = new Notification();
-        if ($this->name === null) {
+        $note = $note ?? new Notification();
+        if ($this->_name === null) {
             $note->addError('"name" is required.');
         }
-        if ($this->name !== null && !StringHelper::stringIsAlphaNumDashUnderscore($this->name)) {
+        if ($this->_name !== null && !StringHelper::stringIsAlphaNumDashUnderscore($this->_name)) {
             $note->addError('"name" must contain only alphanumeric characters, dash, or underscore.');
         }
-        if ($this->fields === null) {
+        if (empty($this->_fields)) {
             $note->addError('"fields" is required.');
+        } else {
+            foreach ($this->_fields as $field) {
+                $field->validation($note);
+            }
         }
         return $note;
     }

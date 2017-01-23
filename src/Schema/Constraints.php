@@ -46,9 +46,9 @@ class Constraints
         }
     }
 
-    public function validation()
+    public function validation($note = null)
     {
-        $note = new Notification();
+        $note = $note ?? new Notification();
         if (array_key_exists(ConstraintTypeEnum::REQUIRED, $this->_dictConstraints)
             && $this->_required === null) {
             $note->addError('"required" must be a boolean.');
