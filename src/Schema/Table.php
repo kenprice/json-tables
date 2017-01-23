@@ -53,7 +53,7 @@ class Table
     {
         if ($this->validation()->hasErrors()) {
             throw new Exceptions\InvalidSchemaException(
-                $this->validation()->errorMessages('Invalid Constraints')
+                $this->validation()->errorMessages('Invalid Table')
             );
         }
     }
