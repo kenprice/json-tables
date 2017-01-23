@@ -4,9 +4,11 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
+use JsonTables\Notification;
 
 class Constraints
 {
+    private $_dictConstraints;
     private $_required;
     private $_minLength;
     private $_maxLength;
@@ -19,38 +21,57 @@ class Constraints
      */
     public function __construct($dictConstraints)
     {
-        if (!$dictConstraints) {
-            throw new Exceptions\InvalidSchemaException('"constraints" cannot be empty.');
-        }
-
+        $this->_dictConstraints = $dictConstraints;
         if (array_key_exists(ConstraintTypeEnum::REQUIRED, $dictConstraints)) {
             $this->_required = StringHelper::parseBool($dictConstraints[ConstraintTypeEnum::REQUIRED]);
-            if ($this->_required === null) {
-                throw new Exceptions\InvalidSchemaException('"required" must be a boolean.');
-            }
         }
-
         if (array_key_exists(ConstraintTypeEnum::MIN_LENGTH, $dictConstraints)) {
 
             $this->_minLength = StringHelper::parseIntNonNegative($dictConstraints[ConstraintTypeEnum::MIN_LENGTH]);
-            if ($this->_minLength === null) {
-                throw new Exceptions\InvalidSchemaException('"minLength" must be an integer.');
-            }
         }
-
         if (array_key_exists(ConstraintTypeEnum::MAX_LENGTH, $dictConstraints)) {
             $this->_maxLength = StringHelper::parseIntNonNegative($dictConstraints[ConstraintTypeEnum::MAX_LENGTH]);
-            if ($this->_maxLength === null) {
-                throw new Exceptions\InvalidSchemaException('"maxLength" must be an integer.');
-            }
         }
-
         if (array_key_exists(ConstraintTypeEnum::UNIQUE, $dictConstraints)) {
             $this->_unique = StringHelper::parseBool($dictConstraints[ConstraintTypeEnum::UNIQUE]);
-            if ($this->_unique === null) {
-                throw new Exceptions\InvalidSchemaException('"unique" must be a boolean.');
-            }
         }
+    }
+
+    public function check()
+    {
+        if ($this->validation()->hasErrors()) {
+            throw new Exceptions\InvalidSchemaException(
+                $this->validation()->errorMessages('Invalid Constraints')
+            );
+        }
+    }
+
+    public function validation()
+    {
+        $note = new Notification();
+        if (array_key_exists(ConstraintTypeEnum::REQUIRED, $this->_dictConstraints)
+            && $this->_required === null) {
+            $note->addError('"required" must be a boolean.');
+        }
+        if (array_key_exists(ConstraintTypeEnum::MIN_LENGTH, $this->_dictConstraints)
+            && $this->_minLength === null) {
+            $note->addError('"minLength" must be an integer.');
+        }
+        if (array_key_exists(ConstraintTypeEnum::MAX_LENGTH, $this->_dictConstraints)
+            && $this->_maxLength === null) {
+            $note->addError('"maxLength" must be an integer.');
+        }
+        if (array_key_exists(ConstraintTypeEnum::UNIQUE, $this->_dictConstraints)
+            && $this->_unique === null) {
+            $note->addError('"unique" must be a boolean.');
+        }
+        if ($this->_required === null
+            && $this->_minLength === null
+            && $this->_maxLength === null
+            && $this->_unique === null) {
+            $note->addError('"constraints" cannot be empty.');
+        }
+        return $note;
     }
 
     public function getRequired()

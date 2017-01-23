@@ -4,11 +4,12 @@ use JsonTables\Schema\Constraints;
 
 class ConstraintsTest extends PHPUnit_Framework_TestCase
 {
-    public function testEmptyDictInConstructorShouldThrowException()
+    public function testEmptyDictInConstructorShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array();
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
     public function testRequiredTrueInConstructorShouldSetRequired()
@@ -38,13 +39,14 @@ class ConstraintsTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($constraints->getRequired());
     }
 
-    public function testRequiredGarbageInConstructorShouldThrowException()
+    public function testRequiredGarbageShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "required" => "garbage"
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
     public function testUniqueTrueInConstructorShouldSetRequired()
@@ -74,13 +76,14 @@ class ConstraintsTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($constraints->getUnique());
     }
 
-    public function testUniqueGarbageInConstructorShouldThrowException()
+    public function testUniqueGarbageInConstructorShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "unique" => "garbage"
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
     public function testMinLengthOfZeroShouldSetMinLengthToZero()
@@ -101,31 +104,34 @@ class ConstraintsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($constraints->getMinLength(), 1337);
     }
 
-    public function testMinLengthOfNegativeIntShouldThrowException()
+    public function testMinLengthOfNegativeIntShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "minLength" => "-1"
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
-    public function testMinLengthOfBlankShouldThrowException()
+    public function testMinLengthOfBlankShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "minLength" => ""
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
-    public function testMinLengthOfGarbageShouldThrowException()
+    public function testMinLengthOfGarbageShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "minLength" => "garbage"
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
     public function testMaxLengthOfZeroShouldSetMaxLengthToZero()
@@ -146,30 +152,33 @@ class ConstraintsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($constraints->getMaxLength(), 1337);
     }
 
-    public function testMaxLengthOfNegativeIntShouldThrowException()
+    public function testMaxLengthOfNegativeIntShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "maxLength" => "-1"
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
-    public function testMaxLengthOfBlankShouldThrowException()
+    public function testMaxLengthOfBlankShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "maxLength" => ""
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 
-    public function testMaxLengthOfGarbageShouldThrowException()
+    public function testMaxLengthOfGarbageShouldErrorOnValidation()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictConstraints = array(
             "maxLength" => "garbage"
         );
-        new Constraints($dictConstraints);
+        $constraints = new Constraints($dictConstraints);
+        $constraints->check();
     }
 }

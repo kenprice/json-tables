@@ -9,6 +9,7 @@ class TableTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
         $dictTable = array();
-        new Table($dictTable);
+        $table = new Table($dictTable);
+        $table->check();
     }
 }
