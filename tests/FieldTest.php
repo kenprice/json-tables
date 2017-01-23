@@ -8,7 +8,8 @@ class FieldTest extends PHPUnit_Framework_TestCase
     public function testThrowsExceptionOnEmptyArray()
     {
         $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
-        $dictFields = array();
-        new Field($dictFields);
+        $dictField = array();
+        $field = new Field($dictField);
+        $field->check();
     }
 }

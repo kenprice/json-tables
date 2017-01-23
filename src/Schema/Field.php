@@ -4,12 +4,14 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
+use JsonTables\Notification;
 
 /**
  * Class Field
  */
 class Field
 {
+    private $_dictField;
     public $name;
     public $title;
     public $type;
@@ -24,14 +26,13 @@ class Field
      */
     public function __construct(array $dictField)
     {
-        if (!array_key_exists("name", $dictField)) {
-            throw new Exceptions\InvalidSchemaException('"name" is required.');
+        $this->_dictField = $dictField;
+        if (array_key_exists("name", $dictField)) {
+            $this->name = $dictField["name"];
         }
-        if (!array_key_exists("type", $dictField)) {
-            throw new Exceptions\InvalidSchemaException('"type" is required.');
+        if (array_key_exists("type", $dictField)) {
+            $this->type = $dictField["type"];
         }
-        $this->name = $dictField["name"];
-        $this->type = $dictField["type"];
         if (array_key_exists("title", $dictField)) {
             $this->title = $dictField["title"];
         }
@@ -44,26 +45,32 @@ class Field
         if (array_key_exists("constraints", $dictField)) {
             $this->constraints = $dictField["constraints"];
         }
-        $this->validate();
     }
 
-    private function validate()
+    public function check()
     {
-        $this->validateName();
-        $this->validateType();
-    }
-
-    private function validateName()
-    {
-        if (!StringHelper::stringIsAlphaNumDashUnderscore($this->name)) {
-            throw new Exceptions\InvalidSchemaException('"name" must be alphanumeric with dash or underscore.');
+        if ($this->validation()->hasErrors()) {
+            throw new Exceptions\InvalidSchemaException(
+                $this->validation()->errorMessages('Invalid Constraints')
+            );
         }
     }
 
-    private function validateType()
+    public function validation()
     {
-        if (!FieldTypeEnum::has($this->type)) {
-            throw new Exceptions\InvalidSchemaException('"type" is invalid.');
+        $note = new Notification();
+        if ($this->name === null) {
+            $note->addError('"name" is required.');
         }
+        if ($this->name !== null && !StringHelper::stringIsAlphaNumDashUnderscore($this->name)) {
+            $note->addError('"name" must contain only alphanumeric characters, dash, or underscore.');
+        }
+        if ($this->type === null) {
+            $note->addError('"type" is required.');
+        }
+        if ($this->type !== null && !FieldTypeEnum::has($this->type)) {
+            $note->addError('"type" is invalid.');
+        }
+        return $note;
     }
 }
