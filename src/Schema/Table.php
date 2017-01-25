@@ -75,6 +75,22 @@ class Table
                 $field->validation($note);
             }
         }
+
+        $primaryKeyIsInvalid =
+            $this->_primaryKey
+            && $this->_fields
+            && !in_array(
+                $this->_primaryKey,
+                array_map(
+                    function(Field $f) {
+                        return $f->getName();
+                    },
+                    $this->_fields
+                )
+            );
+        if ($primaryKeyIsInvalid) {
+            $note->addError('"primaryKey" must be a name of an existing field.');
+        }
         return $note;
     }
 
