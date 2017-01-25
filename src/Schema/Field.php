@@ -76,4 +76,34 @@ class Field
         }
         return $note;
     }
+
+    public function getName()
+    {
+        return $this->_name;
+    }
+
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    public function getType()
+    {
+        return $this->_type;
+    }
+
+    public function getFormat()
+    {
+        return $this->_format;
+    }
+
+    public function getDescription()
+    {
+        return $this->_description;
+    }
+
+    public function getConstraints()
+    {
+        return $this->_constraints;
+    }
 }

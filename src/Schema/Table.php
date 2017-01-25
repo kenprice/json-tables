@@ -77,4 +77,24 @@ class Table
         }
         return $note;
     }
+
+    public function getName()
+    {
+        return $this->_name;
+    }
+
+    public function getFields()
+    {
+        return $this->_fields;
+    }
+
+    public function getPrimaryKey()
+    {
+        return $this->_primaryKey;
+    }
+
+    public function getForeignKeys()
+    {
+        return $this->_foreignKeys;
+    }
 }
