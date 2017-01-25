@@ -13,7 +13,7 @@ class Table
 {
     private $_name;
     private $_fields;
-    private $_primaryKeys;
+    private $_primaryKey;
     private $_foreignKeys;
 
     /**
@@ -30,7 +30,7 @@ class Table
             $this->populateFields($dictTable["fields"]);
         }
         if (array_key_exists("primaryKey", $dictTable)) {
-            $this->_primaryKeys = $dictTable["primaryKey"];
+            $this->_primaryKey = $dictTable["primaryKey"];
         }
         if (array_key_exists("foreignKeys", $dictTable)) {
             $this->_foreignKeys = $dictTable["foreignKeys"];
