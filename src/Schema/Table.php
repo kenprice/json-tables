@@ -59,7 +59,7 @@ class Table
         }
     }
 
-    public function validation($note = null)
+    public function validation(Notification $note = null)
     {
         $note = $note ?? new Notification();
         if ($this->_name === null) {
