@@ -4,6 +4,7 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Notification;
+use JsonTables\Helpers\StringHelper;
 
 class ForeignKey
 {
@@ -46,11 +47,22 @@ class ForeignKey
         if ($this->_field === null) {
             $note->addError('"fields" is required.');
         }
+        if ($this->_field !== null && !StringHelper::stringIsAlphaNumDashUnderscore($this->_field)) {
+            $note->addError('"fields" must contain only alphanumeric characters, dash, or underscore.');
+        }
         if ($this->_referencesResource === null) {
             $note->addError('"resource" in "reference" is required.');
         }
+        if ($this->_referencesResource !== null
+            && !StringHelper::stringIsAlphaNumDashUnderscore($this->_referencesResource)) {
+            $note->addError('"resource" in "reference" must contain only alphanumeric characters, dash, or underscore.');
+        }
         if ($this->_referencesField === null) {
             $note->addError('"fields" in "reference" is required.');
+        }
+        if ($this->_referencesField !== null
+            && !StringHelper::stringIsAlphaNumDashUnderscore($this->_referencesField)) {
+            $note->addError('"fields" in "reference" must contain only alphanumeric characters, dash, or underscore.');
         }
     }
 }
