@@ -33,7 +33,7 @@ class Table
             $this->_primaryKey = $dictTable["primaryKey"];
         }
         if (array_key_exists("foreignKeys", $dictTable)) {
-            $this->_foreignKeys = $dictTable["foreignKeys"];
+            $this->populateForeignKeys($dictTable["foreignKeys"]);
         }
     }
 
@@ -47,6 +47,19 @@ class Table
         foreach ($dictFields as $dictField) {
             $field = new Field($dictField);
             array_push($this->_fields, $field);
+        }
+    }
+
+    /**
+     * Populates foreign keys with Foreign Key objects from keys in parsed JSON schema
+     * @param array $dictForeignKeys
+     */
+    private function populateForeignKeys(array $dictForeignKeys)
+    {
+        $this->_foreignKeys = [];
+        foreach ($dictForeignKeys as $dictForeignKey) {
+            $foreignKey = new ForeignKey($dictForeignKey);
+            array_push($this->_foreignKeys, $foreignKey);
         }
     }
 
@@ -75,7 +88,6 @@ class Table
                 $field->validation($note);
             }
         }
-
         $primaryKeyIsInvalid =
             $this->_primaryKey
             && $this->_fields
@@ -90,6 +102,14 @@ class Table
             );
         if ($primaryKeyIsInvalid) {
             $note->addError('"primaryKey" must be a name of an existing field.');
+        }
+        if (empty($this->_foreignKeys) && $this->_foreignKeys !== null) {
+            $note->addError('"foreignKeys" cannot be empty.');
+        }
+        if (!empty($this->_foreignKeys)) {
+            foreach ($this->_foreignKeys as $foreignKey) {
+                $foreignKey->validation($note);
+            }
         }
         return $note;
     }
