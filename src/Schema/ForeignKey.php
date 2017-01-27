@@ -65,4 +65,19 @@ class ForeignKey
             $note->addError('"fields" in "reference" must contain only alphanumeric characters, dash, or underscore.');
         }
     }
+
+    public function getField()
+    {
+        return $this->_field;
+    }
+
+    public function getReferencedResource()
+    {
+        return $this->_referencesResource;
+    }
+
+    public function getReferencedField()
+    {
+        return $this->_referencesField;
+    }
 }
