@@ -68,12 +68,43 @@ class Schema
         $note = new Notification();
         if (empty($this->_tables)) {
             $note->addError('"tables" is required.');
-        } else {
-            foreach ($this->_tables as $table) {
-                $table->validation($note);
+            return $note;
+        }
+        foreach ($this->_tables as $table) {
+            $table->validation($note);
+        }
+        $this->validateForeignKeys($note);
+        return $note;
+    }
+
+    private function validateForeignKeys(Notification $note)
+    {
+        foreach ($this->_tables as $table) {
+            if (!$table->getForeignKeys()) {
+                continue;
+            }
+            foreach ($table->getForeignKeys() as $foreignKey) {
+                if (!$this->isForeignKeyValid($foreignKey)) {
+                    $note->addError(
+                        "Foreign key {$foreignKey->getField()} referencing {$foreignKey->getReferencedField()} from " .
+                        "{$foreignKey->getReferencedField()} is not valid."
+                    );
+                }
             }
         }
-        return $note;
+    }
+
+    private function isForeignKeyValid(ForeignKey $foreignKey)
+    {
+        foreach ($this->_tables as $table) {
+            if (!$table->getForeignKeys()) {
+                continue;
+            }
+            if ($table->getPrimaryKey() == $foreignKey->getField()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
