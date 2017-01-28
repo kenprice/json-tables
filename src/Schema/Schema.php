@@ -11,10 +11,13 @@ use JsonTables\Notification;
  */
 class Schema
 {
+    /**
+     * @var Table[] All tables of the schema.
+     */
     private $_tables;
 
     /**
-     * Schema constructor.
+     * Schema constructor. Builds schema from a JSON Schema
      * @param string $jsonSchema
      * @throws Exceptions\InvalidJsonException
      */
@@ -27,14 +30,6 @@ class Schema
         }
 
         $this->populateTables($dictSchema);
-    }
-
-    /**
-     * @return array Array of Table objects
-     */
-    public function getTables()
-    {
-        return $this->_tables;
     }
 
     /**
@@ -77,6 +72,10 @@ class Schema
         return $note;
     }
 
+    /**
+     * Validation for foreign keys. Checks if each foreign key references valid primary key.
+     * @param Notification $note
+     */
     private function validateForeignKeys(Notification $note)
     {
         foreach ($this->_tables as $table) {
@@ -94,6 +93,11 @@ class Schema
         }
     }
 
+    /**
+     * Validation for foreign key. Checks if foreign key references valid primary key.
+     * @param ForeignKey $foreignKey
+     * @return bool
+     */
     private function isForeignKeyValid(ForeignKey $foreignKey)
     {
         foreach ($this->_tables as $table) {
@@ -105,6 +109,14 @@ class Schema
             }
         }
         return false;
+    }
+
+    /**
+     * @return Table[]
+     */
+    public function getTables()
+    {
+        return $this->_tables;
     }
 }
 

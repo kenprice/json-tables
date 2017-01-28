@@ -8,10 +8,25 @@ use JsonTables\Notification;
 
 class Constraints
 {
+    /**
+     * @var array Associative array for the Constraints, generated from JSON schema
+     */
     private $_dictConstraints;
+    /**
+     * @var bool Set when field is not nullable
+     */
     private $_required;
+    /**
+     * @var int Minimum length, if field is a string
+     */
     private $_minLength;
+    /**
+     * @var int Maximum length, if field is a string
+     */
     private $_maxLength;
+    /**
+     * @var bool Set when field is unique
+     */
     private $_unique;
 
     /**
@@ -74,21 +89,33 @@ class Constraints
         return $note;
     }
 
+    /**
+     * @return bool
+     */
     public function getRequired()
     {
         return $this->_required === true;
     }
 
+    /**
+     * @return bool
+     */
     public function getUnique()
     {
         return $this->_unique === true;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getMinLength()
     {
         return $this->_minLength;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getMaxLength()
     {
         return $this->_maxLength;

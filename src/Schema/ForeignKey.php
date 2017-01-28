@@ -8,13 +8,26 @@ use JsonTables\Helpers\StringHelper;
 
 class ForeignKey
 {
+    /**
+     * @var string Name of the field
+     */
     private $_field;
+    /**
+     * @var array Associative array for the foreign key, generated from JSON schema
+     */
     private $_dictReferences;
+    /**
+     * @var string Name of the resource (e.g. Table) referenced
+     */
     private $_referencesResource;
+    /**
+     * @var string Name of the field referenced
+     */
     private $_referencesField;
 
     /**
      * ForeignKey constructor.
+     * @param array $dictForeignKey Associative array for the foreign key
      */
     public function __construct($dictForeignKey)
     {
@@ -66,16 +79,25 @@ class ForeignKey
         }
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getField()
     {
         return $this->_field;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getReferencedResource()
     {
         return $this->_referencesResource;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getReferencedField()
     {
         return $this->_referencesField;

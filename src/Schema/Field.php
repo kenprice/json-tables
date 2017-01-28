@@ -11,12 +11,33 @@ use JsonTables\Notification;
  */
 class Field
 {
+    /**
+     * @var array Associative array for the field, generated from JSON schema
+     */
     private $_dictField;
+    /**
+     * @var string Name of the field
+     */
     private $_name;
+    /**
+     * @var string Human-readable designation for the field
+     */
     private $_title;
+    /**
+     * @var FieldTypeEnum Type of the field
+     */
     private $_type;
+    /**
+     * @var mixed Format of the field
+     */
     private $_format;
+    /**
+     * @var string Description of the field
+     */
     private $_description;
+    /**
+     * @var Constraints Constraints on the field
+     */
     private $_constraints;
 
     /**
@@ -77,31 +98,49 @@ class Field
         return $note;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getName()
     {
         return $this->_name;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getTitle()
     {
         return $this->_title;
     }
 
+    /**
+     * @return FieldTypeEnum|mixed
+     */
     public function getType()
     {
         return $this->_type;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFormat()
     {
         return $this->_format;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getDescription()
     {
         return $this->_description;
     }
 
+    /**
+     * @return Constraints
+     */
     public function getConstraints()
     {
         return $this->_constraints;

@@ -11,9 +11,21 @@ use JsonTables\Helpers\StringHelper;
  */
 class Table
 {
+    /**
+     * @var string Table name
+     */
     private $_name;
+    /**
+     * @var Field[] Fields of the table
+     */
     private $_fields;
+    /**
+     * @var string Field name of the primary key
+     */
     private $_primaryKey;
+    /**
+     * @var ForeignKey[] Foreign keys of the table
+     */
     private $_foreignKeys;
 
     /**
@@ -114,21 +126,33 @@ class Table
         return $note;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getName()
     {
         return $this->_name;
     }
 
+    /**
+     * @return Field[]
+     */
     public function getFields()
     {
         return $this->_fields;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getPrimaryKey()
     {
         return $this->_primaryKey;
     }
 
+    /**
+     * @return ForeignKey[]
+     */
     public function getForeignKeys()
     {
         return $this->_foreignKeys;
