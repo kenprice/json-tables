@@ -68,6 +68,7 @@ class Schema
         foreach ($this->_tables as $table) {
             $table->validation($note);
         }
+        $this->validateTables($note);
         $this->validateForeignKeys($note);
         return $note;
     }
@@ -109,6 +110,23 @@ class Schema
             }
         }
         return false;
+    }
+
+
+    /**
+     * Validation for tables. Checks if table names are unique.
+     * @param Notification $note
+     */
+    private function validateTables(Notification $note)
+    {
+        $tableNames = [];
+        foreach ($this->_tables as $table) {
+            $tableName = $table->getName();
+            if (in_array($tableName, $tableNames)) {
+                $note->addError("{$tableName} is not a unique table name.");
+            }
+            array_push($tableNames, $tableName);
+        }
     }
 
     /**

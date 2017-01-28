@@ -67,4 +67,12 @@ class SchemaTest extends PHPUnit_Framework_TestCase
         $schema = new \JsonTables\Schema\Schema($jsonSchema);
         $schema->check();
     }
+
+    public function testShouldErrorGivenJsonTableSchemaWithNonUniqueTableNames()
+    {
+        $this->expectException(JsonTables\Exceptions\InvalidSchemaException::class);
+        $jsonSchema = file_get_contents("tests/test-schemas/UsersAndPostsNonUniqueTableNames.json");
+        $schema = new \JsonTables\Schema\Schema($jsonSchema);
+        $schema->check();
+    }
 }
