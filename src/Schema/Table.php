@@ -3,13 +3,14 @@
 namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
+use JsonTables\IValidate;
 use JsonTables\Notification;
 use JsonTables\Helpers\StringHelper;
 
 /**
  * Class Table
  */
-class Table
+class Table implements IValidate
 {
     /**
      * @var string Table name

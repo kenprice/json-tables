@@ -4,12 +4,13 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
+use JsonTables\IValidate;
 use JsonTables\Notification;
 
 /**
  * Class Field
  */
-class Field
+class Field implements IValidate
 {
     /**
      * @var array Associative array for the field, generated from JSON schema

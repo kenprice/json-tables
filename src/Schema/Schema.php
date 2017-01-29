@@ -3,13 +3,14 @@
 namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
+use JsonTables\IValidate;
 use JsonTables\Notification;
 
 /**
  * Class Schema
  * @package JsonTables
  */
-class Schema
+class Schema implements IValidate
 {
     /**
      * @var Table[] All tables of the schema.
@@ -58,7 +59,7 @@ class Schema
         }
     }
 
-    public function validation()
+    public function validation(Notification $note = null)
     {
         $note = new Notification();
         if (empty($this->_tables)) {

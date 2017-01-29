@@ -3,10 +3,11 @@
 namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
+use JsonTables\IValidate;
 use JsonTables\Notification;
 use JsonTables\Helpers\StringHelper;
 
-class ForeignKey
+class ForeignKey implements IValidate
 {
     /**
      * @var string Name of the field

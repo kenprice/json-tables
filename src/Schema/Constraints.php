@@ -4,9 +4,10 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
+use JsonTables\IValidate;
 use JsonTables\Notification;
 
-class Constraints
+class Constraints implements IValidate
 {
     /**
      * @var array Associative array for the Constraints, generated from JSON schema
