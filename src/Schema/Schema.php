@@ -87,7 +87,7 @@ class Schema
                 if (!$this->isForeignKeyValid($foreignKey)) {
                     $note->addError(
                         "Foreign key {$foreignKey->getField()} referencing {$foreignKey->getReferencedField()} from " .
-                        "{$foreignKey->getReferencedField()} is not valid."
+                        "{$foreignKey->getReferencedResource()} is not valid."
                     );
                 }
             }
@@ -102,10 +102,10 @@ class Schema
     private function isForeignKeyValid(ForeignKey $foreignKey)
     {
         foreach ($this->_tables as $table) {
-            if (!$table->getForeignKeys()) {
+            if (!$table->getPrimaryKey()) {
                 continue;
             }
-            if ($table->getPrimaryKey() == $foreignKey->getField()) {
+            if ($table->getPrimaryKey() == $foreignKey->getReferencedField()) {
                 return true;
             }
         }
