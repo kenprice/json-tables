@@ -6,12 +6,13 @@ use PHPUnit\Framework\TestCase;
 
 class TableTest extends PHPUnit_Framework_TestCase
 {
-    public function testDoesNotThrowExceptionOnValidTable()
+    public function testShouldPopulateFieldsGivenValidDictTable()
     {
         $jsonTable = file_get_contents("tests/test-jsontables/Posts.json");
         $dictTable = json_decode($jsonTable, true);
         $table = new Table($dictTable);
         $table->check();
+        $this->assertEquals(count($table->getFields()), 4);
     }
 
     public function testThrowsExceptionOnEmptyArray()
