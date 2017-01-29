@@ -78,7 +78,6 @@ class Table
     /**
      * Validation for foreign keys. Checks if foreign keys are existing fields.
      * @param Notification $note
-     * @return bool
      */
     private function validateForeignKeys(Notification $note)
     {
