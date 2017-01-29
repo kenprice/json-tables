@@ -124,24 +124,35 @@ class Table
             );
         if ($primaryKeyNotValidField) {
             $note->addError('"primaryKey" must be a name of an existing field.');
+            return;
         }
 
-        // If primary key references an existing field, but the field is not unique,
-        // then it is invalid.
-        $fieldsDict =
+        // If primary key references an existing field, but the field is not unique
+        // nor a foreign key, then it is invalid.
+        $fieldsUniqueness =
+            array_map(
+                function (Field $f) {
+                    return $f->getConstraints() && $f->getConstraints()->getUnique();
+                },
+                $this->_fields
+            );
+        $primaryKeyUnique =
             array_combine(
                 $fieldNames,
-                array_map(
-                    function (Field $f) {
-                        return $f->getConstraints() && $f->getConstraints()->getUnique();
-                    },
-                    $this->_fields
-                )
+                $fieldsUniqueness
+            )[$this->_primaryKey];
+        $foreignKeys =
+            array_map(
+                function (ForeignKey $f) {
+                    return $f->getField();
+                },
+                $this->_foreignKeys ?? []
             );
-        $primaryKeyNotUniqueField = !$primaryKeyNotValidField
-            && !$fieldsDict[$this->_primaryKey];
-        if ($primaryKeyNotUniqueField) {
+        $primaryKeyForeignKey = in_array($this->_primaryKey, $foreignKeys);
+
+        if (!$primaryKeyUnique && !$primaryKeyForeignKey) {
             $note->addError('"primaryKey" must be a unique field.');
+            return;
         }
     }
 

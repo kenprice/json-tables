@@ -49,4 +49,12 @@ class TableTest extends PHPUnit_Framework_TestCase
         $table = new Table($dictTable);
         $table->check();
     }
+
+    public function testShouldSucceedValidationWhenPrimaryKeyIsAlsoForeignKey()
+    {
+        $jsonTable = file_get_contents("tests/test-jsontables/UserPhotoPrimaryKeyIsForeignKey.json");
+        $dictTable = json_decode($jsonTable, true);
+        $table = new Table($dictTable);
+        $table->check();
+    }
 }

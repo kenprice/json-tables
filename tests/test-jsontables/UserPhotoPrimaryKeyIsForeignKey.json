@@ -1,0 +1,25 @@
+{
+  "name": "user_photo",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": "integer"
+    },
+    {
+      "name": "photo_url",
+      "title": "Photo URL",
+      "type": "string",
+      "description": "URL of user photo"
+    }
+  ],
+  "primaryKey": "user_id",
+  "foreignKeys": [
+    {
+      "fields": "user_id",
+      "reference": {
+        "resource": "users",
+        "fields": "id"
+      }
+    }
+  ]
+}
