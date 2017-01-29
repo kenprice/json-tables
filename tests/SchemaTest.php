@@ -16,6 +16,7 @@ class SchemaTest extends PHPUnit_Framework_TestCase
     {
         $jsonSchema = file_get_contents("tests/test-schemas/UsersAndPosts.json");
         $schema = new \JsonTables\Schema\Schema($jsonSchema);
+        $schema->check();
         $tables = $schema->getTables();
         $this->assertCount(2, $tables);
     }
