@@ -75,6 +75,31 @@ class Table
         }
     }
 
+    /**
+     * Validation for foreign keys. Checks if foreign keys are existing fields.
+     * @param Notification $note
+     * @return bool
+     */
+    private function validateForeignKeys(Notification $note)
+    {
+        foreach ($this->_foreignKeys as $foreignKey) {
+            $foreignKey->validation($note);
+            $foreignKeyName = $foreignKey->getField();
+            $fieldExists = false;
+            foreach ($this->_fields as $field) {
+                if ($field->getName() == $foreignKeyName) {
+                    $fieldExists = true;
+                }
+                if ($fieldExists) {
+                    break;
+                }
+            }
+            if (!$fieldExists) {
+                $note->addError("Foreign key \"{$foreignKeyName}\" must have a field.");
+            }
+        }
+    }
+
     public function check()
     {
         if ($this->validation()->hasErrors()) {
@@ -119,9 +144,7 @@ class Table
             $note->addError('"foreignKeys" cannot be empty.');
         }
         if (!empty($this->_foreignKeys)) {
-            foreach ($this->_foreignKeys as $foreignKey) {
-                $foreignKey->validation($note);
-            }
+            $this->validateForeignKeys($note);
         }
         return $note;
     }
