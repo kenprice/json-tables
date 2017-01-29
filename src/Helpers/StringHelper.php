@@ -7,6 +7,12 @@ namespace JsonTables\Helpers;
  */
 class StringHelper
 {
+    /**
+     * Returns true if string only contains alphanumeric characters, plus dash
+     * and underscore
+     * @param string $str
+     * @return bool
+     */
     public static function stringIsAlphaNumDashUnderscore(string $str)
     {
         return preg_match('/^[\w\-]+$/', $str) === 1;

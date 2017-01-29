@@ -1,0 +1,46 @@
+{
+  "name": "posts",
+  "fields": [
+    {
+      "name": "id",
+      "title": "Post ID",
+      "type": "integer",
+      "description": "Unique ID for the post",
+      "constraints": {
+        "unique": true
+      }
+    },
+    {
+      "name": "user_id",
+      "title": "User ID",
+      "type": "integer",
+      "description": "ID of the user that owns this post"
+    },
+    {
+      "name": "title",
+      "title": "Post Title",
+      "type": "string",
+      "description": "Title of the post",
+      "constraints": {
+        "minLength": 1,
+        "maxLength": 128
+      }
+    },
+    {
+      "name": "content",
+      "title": "Post content",
+      "type": "string",
+      "description": "Content of the post"
+    }
+  ],
+  "primaryKey": "id",
+  "foreignKeys": [
+    {
+      "fields": "user_id",
+      "reference": {
+        "resource": "users",
+        "fields": "id"
+      }
+    }
+  ]
+}

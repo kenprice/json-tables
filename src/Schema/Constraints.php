@@ -4,14 +4,30 @@ namespace JsonTables\Schema;
 
 use JsonTables\Exceptions;
 use JsonTables\Helpers\StringHelper;
+use JsonTables\IValidate;
 use JsonTables\Notification;
 
-class Constraints
+class Constraints implements IValidate
 {
+    /**
+     * @var array Associative array for the Constraints, generated from JSON schema
+     */
     private $_dictConstraints;
+    /**
+     * @var bool Set when field is not nullable
+     */
     private $_required;
+    /**
+     * @var int Minimum length, if field is a string
+     */
     private $_minLength;
+    /**
+     * @var int Maximum length, if field is a string
+     */
     private $_maxLength;
+    /**
+     * @var bool Set when field is unique
+     */
     private $_unique;
 
     /**
@@ -46,9 +62,9 @@ class Constraints
         }
     }
 
-    public function validation()
+    public function validation(Notification $note = null)
     {
-        $note = new Notification();
+        $note = $note ?? new Notification();
         if (array_key_exists(ConstraintTypeEnum::REQUIRED, $this->_dictConstraints)
             && $this->_required === null) {
             $note->addError('"required" must be a boolean.');
@@ -74,21 +90,33 @@ class Constraints
         return $note;
     }
 
+    /**
+     * @return bool
+     */
     public function getRequired()
     {
         return $this->_required === true;
     }
 
+    /**
+     * @return bool
+     */
     public function getUnique()
     {
         return $this->_unique === true;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getMinLength()
     {
         return $this->_minLength;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getMaxLength()
     {
         return $this->_maxLength;
