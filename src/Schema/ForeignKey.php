@@ -41,7 +41,7 @@ class ForeignKey
             $this->_referencesResource = $this->_dictReferences["resource"];
         }
         if (array_key_exists('fields', $this->_dictReferences)) {
-            $this->_referencesField = $this->_dictReferences["resource"];
+            $this->_referencesField = $this->_dictReferences["fields"];
         }
     }
 
