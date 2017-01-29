@@ -30,4 +30,22 @@ class TableTest extends PHPUnit_Framework_TestCase
         $table = new Table($dictTable);
         $table->check();
     }
+
+    public function testThrowsExceptionWhenPrimaryKeyHasNoValidField()
+    {
+        $this->expectException(InvalidSchemaException::class);
+        $jsonTable = file_get_contents("tests/test-jsontables/PostsPrimaryKeyWithNoValidField.json");
+        $dictTable = json_decode($jsonTable, true);
+        $table = new Table($dictTable);
+        $table->check();
+    }
+
+    public function testThrowsExceptionWhenPrimaryKeyIsNotUniqueField()
+    {
+        $this->expectException(InvalidSchemaException::class);
+        $jsonTable = file_get_contents("tests/test-jsontables/PostsPrimaryKeyIsNotUniqueField.json");
+        $dictTable = json_decode($jsonTable, true);
+        $table = new Table($dictTable);
+        $table->check();
+    }
 }

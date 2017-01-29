@@ -99,6 +99,52 @@ class Table
         }
     }
 
+    /**
+     * Validation for primary key. Checks if primary key references a unique field.
+     * @param Notification $note
+     */
+    private function validatePrimaryKey(Notification $note)
+    {
+        if ($this->_primaryKey === null || empty($this->_fields)) {
+            return;
+        }
+
+        // If primary key is not in a list of field names, then it is invalid.
+        $fieldNames =
+            array_map(
+                function(Field $f) {
+                    return $f->getName();
+                },
+                $this->_fields
+            );
+        $primaryKeyNotValidField =
+            !in_array(
+                $this->_primaryKey,
+                $fieldNames
+            );
+        if ($primaryKeyNotValidField) {
+            $note->addError('"primaryKey" must be a name of an existing field.');
+        }
+
+        // If primary key references an existing field, but the field is not unique,
+        // then it is invalid.
+        $fieldsDict =
+            array_combine(
+                $fieldNames,
+                array_map(
+                    function (Field $f) {
+                        return $f->getConstraints() && $f->getConstraints()->getUnique();
+                    },
+                    $this->_fields
+                )
+            );
+        $primaryKeyNotUniqueField = !$primaryKeyNotValidField
+            && !$fieldsDict[$this->_primaryKey];
+        if ($primaryKeyNotUniqueField) {
+            $note->addError('"primaryKey" must be a unique field.');
+        }
+    }
+
     public function check()
     {
         if ($this->validation()->hasErrors()) {
@@ -124,21 +170,7 @@ class Table
                 $field->validation($note);
             }
         }
-        $primaryKeyIsInvalid =
-            $this->_primaryKey
-            && $this->_fields
-            && !in_array(
-                $this->_primaryKey,
-                array_map(
-                    function(Field $f) {
-                        return $f->getName();
-                    },
-                    $this->_fields
-                )
-            );
-        if ($primaryKeyIsInvalid) {
-            $note->addError('"primaryKey" must be a name of an existing field.');
-        }
+        $this->validatePrimaryKey($note);
         if (empty($this->_foreignKeys) && $this->_foreignKeys !== null) {
             $note->addError('"foreignKeys" cannot be empty.');
         }
