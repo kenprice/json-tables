@@ -4,3 +4,4 @@ composer.phar
 .idea/
 
 config.json
+database.sqlite
