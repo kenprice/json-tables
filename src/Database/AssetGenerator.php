@@ -5,7 +5,12 @@ namespace JsonTables\Database;
 use JsonTables\Schema\Schema;
 use JsonTables\Schema\Table;
 use JsonTables\Schema\Field;
+use \Doctrine\DBAL;
 
+/**
+ * Class AssetGenerator
+ * @package JsonTables\Database
+ */
 class AssetGenerator
 {
     /**
@@ -16,14 +21,20 @@ class AssetGenerator
      * @var \Doctrine\DBAL\Schema\Schema
      */
     private $_schema;
+    /**
+     * @var \Doctrine\DBAL\Driver\Connection
+     */
+    private $_connection;
 
     /**
      * AssetGenerator constructor.
-     * @param $schema Schema JsonTables schema
+     * @param Schema $schema JsonTables schema
+     * @param \Doctrine\DBAL\Driver\Connection $conn
      */
-    public function __construct(Schema $schema)
+    public function __construct(Schema $schema, DBAL\Driver\Connection $conn)
     {
         $this->_jsonTablesSchema = $schema;
+        $this->_connection = $conn;
     }
 
     /**
@@ -32,16 +43,15 @@ class AssetGenerator
     public function generate()
     {
         $dictTables = array();
-        $conn = Connection::get();
-        $this->_schema = new \Doctrine\DBAL\Schema\Schema();
+        $this->_schema = new DBAL\Schema\Schema();
         $this->_jsonTablesSchema->check();
         foreach ($this->_jsonTablesSchema->getTables() as $table) {
             $dictTables[$table->getName()] = $this->addTable($table);
         }
         $this->addForeignKeyConstraints($dictTables);
-        $queries = $this->_schema->toSql($conn->getDatabasePlatform());
+        $queries = $this->_schema->toSql($this->_connection->getDatabasePlatform());
         foreach ($queries as $query) {
-            $conn->executeQuery($query);
+            $this->_connection->executeQuery($query);
         }
     }
 
@@ -70,7 +80,7 @@ class AssetGenerator
      * @param \Doctrine\DBAL\Schema\Table $table
      * @param Field $field
      */
-    private function addColumnToTable(\Doctrine\DBAL\Schema\Table $table, Field $field)
+    private function addColumnToTable(DBAL\Schema\Table $table, Field $field)
     {
         $options = array();
         if ($field->getConstraints()) {
