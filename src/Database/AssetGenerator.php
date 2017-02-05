@@ -4,6 +4,7 @@ namespace JsonTables\Database;
 
 use JsonTables\Schema\Schema;
 use JsonTables\Schema\Table;
+use JsonTables\Schema\Field;
 
 class AssetGenerator
 {
@@ -55,23 +56,37 @@ class AssetGenerator
     {
         $table = $this->_schema->createTable($jsonTable->getName());
         foreach ($jsonTable->getFields() as $field) {
-            $constraints = array();
-            if ($field->getConstraints()) {
-                $constraints = ConstraintsTranslator::translate(
-                    $field->getConstraints()
-                );
-            }
-            $table->addColumn(
-                $field->getName(),
-                $field->getType(),
-                $constraints
-            );
+            $this->addColumnToTable($table, $field);
         }
         $primaryKey = $jsonTable->getPrimaryKey();
         if ($primaryKey) {
             $table->setPrimaryKey(array($primaryKey));
         }
         return $table;
+    }
+
+    /**
+     * Adds a field to the table, generated from Schema\Field
+     * @param \Doctrine\DBAL\Schema\Table $table
+     * @param Field $field
+     */
+    private function addColumnToTable(\Doctrine\DBAL\Schema\Table $table, Field $field)
+    {
+        $options = array();
+        if ($field->getConstraints()) {
+            $options = ConstraintsTranslator::translate(
+                $field->getConstraints()
+            );
+        }
+        $description = $field->getDescription();
+        if ($description) {
+            $options['description'] = $description;
+        }
+        $table->addColumn(
+            $field->getName(),
+            $field->getType(),
+            $options
+        );
     }
 
     /**
