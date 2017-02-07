@@ -1,7 +1,4 @@
 composer.phar
 /vendor/
-
 .idea/
-
-config.json
 database.sqlite
