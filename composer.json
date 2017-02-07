@@ -19,7 +19,8 @@
     "hassankhan/config": "^0.10.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "5.7.*"
+    "phpunit/phpunit": "5.7.*",
+    "victorjonsson/markdowndocs": "^1.3"
   },
   "scripts": {
     "phpunit": "phpunit --bootstrap vendor/autoload.php tests/",
