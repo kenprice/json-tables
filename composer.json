@@ -1,6 +1,6 @@
 {
   "name": "kenprice/json-tables",
-  "description": "Generate Tables from a JSON Table Schema",
+  "description": "Generate Tables from a JSON Table Schema-like JSON file",
   "license": "MIT",
   "authors": [
     {
