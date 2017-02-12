@@ -21,11 +21,17 @@ class FieldOptions implements IValidate
      * @var mixed Default value of field.
      */
     private $_default;
+    /**
+     * @var string Field type
+     */
+    private $_fieldType;
 
     /**
      * FieldOption constructor.
+     * @param array $dictOptions Field options as associative array
+     * @param string Field type (enumerated in FieldOptionTypeEnum)
      */
-    public function __construct($dictOptions)
+    public function __construct($dictOptions, $fieldType)
     {
         $this->_dictOptions = $dictOptions;
         if (array_key_exists(FieldOptionTypeEnum::AUTOINCREMENT, $dictOptions)) {
@@ -34,6 +40,7 @@ class FieldOptions implements IValidate
         if (array_key_exists(FieldOptionTypeEnum::DEFAULT, $dictOptions)) {
             $this->_default = $dictOptions[FieldOptionTypeEnum::DEFAULT];
         }
+        $this->_fieldType = $fieldType;
     }
 
     public function check()
@@ -51,6 +58,19 @@ class FieldOptions implements IValidate
         if (array_key_exists(FieldOptionTypeEnum::AUTOINCREMENT, $this->_dictOptions)
             && $this->_autoincrement === null) {
             $note->addError('"autoincrement" must be a boolean.');
+        }
+
+        // Default values only supported for integer, number, string.
+        $acceptableDefaultTypes = [FieldTypeEnum::INTEGER, FieldTypeEnum::STRING];
+        $fieldTypeDefaultSupported = in_array($this->_fieldType, $acceptableDefaultTypes);
+        if ($this->_default && !$fieldTypeDefaultSupported) {
+            $note->addError('Unsupported type for "default"');
+        }
+
+        if ($this->_default && $this->_fieldType == FieldTypeEnum::INTEGER) {
+            if (StringHelper::parseInt($this->_default) === null) {
+                $note->addError('"default" is not a valid integer');
+            }
         }
     }
 
