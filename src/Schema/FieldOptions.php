@@ -72,6 +72,7 @@ class FieldOptions implements IValidate
                 $note->addError('"default" is not a valid integer');
             }
         }
+        return $note;
     }
 
     /**
