@@ -48,7 +48,6 @@ class Field implements IValidate
     /**
      * Field constructor.
      * @param array $dictField Array containing information about table fields
-     * @throws Exceptions\InvalidSchemaException
      */
     public function __construct(array $dictField)
     {
