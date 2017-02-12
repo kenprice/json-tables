@@ -33,7 +33,6 @@ class Constraints implements IValidate
     /**
      * Constraints constructor.
      * @param array $dictConstraints Constraints as associative array
-     * @throws Exceptions\InvalidSchemaException
      */
     public function __construct($dictConstraints)
     {

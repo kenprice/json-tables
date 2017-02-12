@@ -24,6 +24,7 @@
   },
   "scripts": {
     "phpunit": "phpunit --bootstrap vendor/autoload.php tests/",
-    "phpcs": "phpcs --standard=ruleset.xml src/ tests/"
+    "phpcs": "phpcs --standard=ruleset.xml src/ tests/",
+    "apidocs": "vendor/bin/phpdoc-md generate src > docs/api.md"
   }
 }

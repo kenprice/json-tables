@@ -40,11 +40,14 @@ class Field implements IValidate
      * @var Constraints Constraints on the field
      */
     private $_constraints;
+    /**
+     * @var FieldOptions Options for the field, e.g. autoincrement, default values, etc.
+     */
+    private $_options;
 
     /**
      * Field constructor.
      * @param array $dictField Array containing information about table fields
-     * @throws Exceptions\InvalidSchemaException
      */
     public function __construct(array $dictField)
     {
@@ -66,6 +69,9 @@ class Field implements IValidate
         }
         if (array_key_exists("constraints", $dictField)) {
             $this->_constraints = new Constraints($dictField["constraints"]);
+        }
+        if (array_key_exists("options", $dictField)) {
+            $this->_options = new FieldOptions($dictField["options"], $this->_type);
         }
     }
 
@@ -95,6 +101,9 @@ class Field implements IValidate
         }
         if ($this->_constraints) {
             $this->_constraints->validation($note);
+        }
+        if ($this->_options) {
+            $this->_options->validation($note);
         }
         return $note;
     }
