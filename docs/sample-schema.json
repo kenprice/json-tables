@@ -10,6 +10,9 @@
           "description": "Unique ID for the user",
           "constraints": {
             "unique": true
+          },
+          "options": {
+            "autoincrement": true
           }
         },
         {
@@ -19,6 +22,7 @@
           "description": "The username of the user, used to log in",
           "constraints": {
             "unique": true,
+            "required": true,
             "minLength": 3,
             "maxLength": 20
           }
@@ -29,6 +33,7 @@
           "type": "string",
           "description": "Password hash",
           "constraints": {
+            "required": true,
             "minLength": 16
           }
         }
@@ -45,6 +50,9 @@
           "description": "Unique ID for the post",
           "constraints": {
             "unique": true
+          },
+          "options": {
+            "autoincrement": true
           }
         },
         {
@@ -59,7 +67,7 @@
           "type": "string",
           "description": "Title of the post",
           "constraints": {
-            "minLength": 1,
+            "required": true,
             "maxLength": 128
           }
         },
@@ -67,7 +75,10 @@
           "name": "content",
           "title": "Post content",
           "type": "string",
-          "description": "Content of the post"
+          "description": "Content of the post",
+          "constraints": {
+            "required": true
+          }
         }
       ],
       "primaryKey": "id",

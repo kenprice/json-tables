@@ -9,7 +9,9 @@
 - [\JsonTables\Exceptions\InvalidJsonException](#class-jsontablesexceptionsinvalidjsonexception)
 - [\JsonTables\Helpers\StringHelper](#class-jsontableshelpersstringhelper)
 - [\JsonTables\Schema\Table](#class-jsontablesschematable)
+- [\JsonTables\Schema\FieldOptions](#class-jsontablesschemafieldoptions)
 - [\JsonTables\Schema\FieldTypeEnum](#class-jsontablesschemafieldtypeenum)
+- [\JsonTables\Schema\FieldOptionTypeEnum](#class-jsontablesschemafieldoptiontypeenum)
 - [\JsonTables\Schema\Schema](#class-jsontablesschemaschema)
 - [\JsonTables\Schema\ConstraintTypeEnum](#class-jsontablesschemaconstrainttypeenum)
 - [\JsonTables\Schema\Constraints](#class-jsontablesschemaconstraints)
@@ -98,6 +100,7 @@
 | Visibility | Function |
 |:-----------|:---------|
 | public static | <strong>parseBool(</strong><em>\string</em> <strong>$str</strong>)</strong> : <em>mixed</em><br /><em>Parses input to bool. Null if invalid. Note: Blank string will return false.</em> |
+| public static | <strong>parseInt(</strong><em>\string</em> <strong>$str</strong>)</strong> : <em>mixed</em><br /><em>Parses input to an integer. Null if invalid.</em> |
 | public static | <strong>parseIntNonNegative(</strong><em>\string</em> <strong>$str</strong>)</strong> : <em>mixed</em><br /><em>Parses input to non-negative integer. Null if invalid.</em> |
 | public static | <strong>stringIsAlphaNumDashUnderscore(</strong><em>\string</em> <strong>$str</strong>)</strong> : <em>bool</em><br /><em>Returns true if string only contains alphanumeric characters, plus dash and underscore</em> |
 
@@ -119,6 +122,19 @@
 *This class implements [\JsonTables\IValidate](#interface-jsontablesivalidate)*
 
 <hr /> 
+### Class: \JsonTables\Schema\FieldOptions
+
+| Visibility | Function |
+|:-----------|:---------|
+| public | <strong>__construct(</strong><em>array</em> <strong>$dictOptions</strong>, <em>mixed</em> <strong>$fieldType</strong>)</strong> : <em>void</em><br /><em>FieldOption constructor.</em> |
+| public | <strong>check()</strong> : <em>void</em> |
+| public | <strong>getAutoincrement()</strong> : <em>bool</em> |
+| public | <strong>getDefault()</strong> : <em>mixed</em> |
+| public | <strong>validation(</strong><em>[\JsonTables\Notification](#class-jsontablesnotification)</em> <strong>$note=null</strong>)</strong> : <em>void</em> |
+
+*This class implements [\JsonTables\IValidate](#interface-jsontablesivalidate)*
+
+<hr /> 
 ### Class: \JsonTables\Schema\FieldTypeEnum
 
 > Class FieldTypeEnum Enumerates accepted field types
@@ -127,6 +143,14 @@
 |:-----------|:---------|
 
 *This class extends \MabeEnum\Enum*
+
+<hr /> 
+### Class: \JsonTables\Schema\FieldOptionTypeEnum
+
+> Class FieldOptionTypeEnum Enumerates accepted field options
+
+| Visibility | Function |
+|:-----------|:---------|
 
 <hr /> 
 ### Class: \JsonTables\Schema\Schema

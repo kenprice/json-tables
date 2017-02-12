@@ -1,7 +1,7 @@
 # json-tables
 Use JSON Table Schema-like JSON files to create and validate tables. In other words, take a JSON string like this:
 
-```
+```json
 {
   "tables": [
     {
@@ -12,6 +12,9 @@ Use JSON Table Schema-like JSON files to create and validate tables. In other wo
           "type": "integer",
           "constraints": {
             "unique": true
+          },
+          "options": {
+            "autoincrement": true
           }
         },
         {
@@ -35,12 +38,15 @@ Use JSON Table Schema-like JSON files to create and validate tables. In other wo
 }
 ```
 
-...and create tables from it!
+...and create tables from it! Validation is performed against the JSON table schema given as input. 
 
 ## Usage
 
-```
-$jsonPath = 'sample-schema.json';
+Example usage. 
+
+```php
+<?php
+$jsonPath = 'docs/sample-schema.json';
 $jsonSchema = file_get_contents($jsonPath);
 $dbConfig = array(
     'path' => 'database.sqlite',
@@ -48,6 +54,9 @@ $dbConfig = array(
 );
 JsonTables::generateAssetsFromJsonTable($jsonSchema, $dbConfig);
 ```
+`$dbConfig` is a [Doctrine DBAL configuration](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html). The SQLite PDO driver is used in the example above.
+ 
+Try it with `docs/sample-schema.json`!
 
 ## Installation
 
@@ -57,4 +66,4 @@ composer require kenprice/json-tables
 
 ## Notes
 
-Work in progress! See docs for example schema and basic API docs.
+Work in progress! See `/docs` for example schema and basic API docs, and see `CHANGELOG.md` for the latest changes.
