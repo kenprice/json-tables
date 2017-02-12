@@ -155,4 +155,12 @@ class Field implements IValidate
     {
         return $this->_constraints;
     }
+
+    /**
+     * @return FieldOptions
+     */
+    public function getFieldOptions()
+    {
+        return $this->_options;
+    }
 }

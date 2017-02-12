@@ -88,6 +88,12 @@ class AssetGenerator
                 $field->getConstraints()
             );
         }
+        if ($field->getFieldOptions()) {
+            $fieldOptions = FieldOptionsTranslator::translate(
+                $field->getFieldOptions()
+            );
+            $options = array_merge($options, $fieldOptions);
+        }
         $description = $field->getDescription();
         if ($description) {
             $options['description'] = $description;
