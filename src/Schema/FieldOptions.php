@@ -60,16 +60,20 @@ class FieldOptions implements IValidate
             $note->addError('"autoincrement" must be a boolean.');
         }
 
+        if ($this->_autoincrement && $this->_fieldType != FieldTypeEnum::INTEGER) {
+            $note->addError('"autoincrement" can only be applied to integers.');
+        }
+
         // Default values only supported for integer, number, string.
         $acceptableDefaultTypes = [FieldTypeEnum::INTEGER, FieldTypeEnum::STRING];
         $fieldTypeDefaultSupported = in_array($this->_fieldType, $acceptableDefaultTypes);
         if ($this->_default && !$fieldTypeDefaultSupported) {
-            $note->addError('Unsupported type for "default"');
+            $note->addError('Unsupported type for "default".');
         }
 
         if ($this->_default && $this->_fieldType == FieldTypeEnum::INTEGER) {
             if (StringHelper::parseInt($this->_default) === null) {
-                $note->addError('"default" is not a valid integer');
+                $note->addError('"default" is not a valid integer.');
             }
         }
         return $note;
