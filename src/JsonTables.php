@@ -4,6 +4,7 @@ namespace JsonTables;
 
 use Doctrine\DBAL\DriverManager;
 use JsonTables\Database\AssetGenerator;
+use JsonTables\Schema\Schema;
 
 /**
  * Class JsonTables
@@ -19,8 +20,19 @@ class JsonTables
      */
     public static function generateAssetsFromJsonTable($jsonSchema, $dbConfig)
     {
+        $schema = new Schema($jsonSchema);
+        JsonTables::generateAssetsFromSchema($schema, $dbConfig);
+    }
+
+    /**
+     * Generates tables for the database specified in $dbConfig. Table schemas are
+     * generated from a JsonSchema object
+     * @param Schema $schema json-tables schema
+     * @param array $dbConfig For Doctrine DBAL connection
+     */
+    public static function generateAssetsFromSchema(Schema $schema, $dbConfig)
+    {
         $conn = DriverManager::getConnection($dbConfig);
-        $schema = new Schema\Schema($jsonSchema);
         $schema->check();
         $assetGenerator = new AssetGenerator($schema, $conn);
         $assetGenerator->generate();
