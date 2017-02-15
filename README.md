@@ -46,6 +46,8 @@ Example usage.
 
 ```php
 <?php
+use JsonTables\JsonTables;
+
 $jsonPath = 'docs/sample-schema.json';
 $jsonSchema = file_get_contents($jsonPath);
 $dbConfig = array(
@@ -57,6 +59,22 @@ JsonTables::generateAssetsFromJsonTable($jsonSchema, $dbConfig);
 `$dbConfig` is a [Doctrine DBAL configuration](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html). The SQLite PDO driver is used in the example above.
  
 Try it with `docs/sample-schema.json`!
+
+You can also create your own `\JsonTables\Schema\Schema` object and generate SQL assets from it. Like so:
+
+```php
+<?php
+use JsonTables\JsonTables;
+use JsonTables\Schema;
+
+$jsonPath = 'docs/sample-schema.json';
+$schema = new Schema\Schema(file_get_contents($jsonPath));
+$dbConfig = array(
+    'path' => 'database.sqlite',
+    'driver' => 'pdo_sqlite'
+);
+JsonTables::generateAssetsFromSchema($schema, $dbConfig);
+```
 
 ## Installation
 

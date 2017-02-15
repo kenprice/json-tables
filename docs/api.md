@@ -3,6 +3,7 @@
 - [\JsonTables\IValidate (interface)](#interface-jsontablesivalidate)
 - [\JsonTables\Notification](#class-jsontablesnotification)
 - [\JsonTables\JsonTables](#class-jsontablesjsontables)
+- [\JsonTables\Database\FieldOptionsTranslator](#class-jsontablesdatabasefieldoptionstranslator)
 - [\JsonTables\Database\AssetGenerator](#class-jsontablesdatabaseassetgenerator)
 - [\JsonTables\Database\ConstraintsTranslator](#class-jsontablesdatabaseconstraintstranslator)
 - [\JsonTables\Exceptions\InvalidSchemaException](#class-jsontablesexceptionsinvalidschemaexception)
@@ -46,6 +47,16 @@
 | Visibility | Function |
 |:-----------|:---------|
 | public static | <strong>generateAssetsFromJsonTable(</strong><em>string</em> <strong>$jsonSchema</strong>, <em>array</em> <strong>$dbConfig</strong>)</strong> : <em>void</em><br /><em>Generates tables for the database specified in $dbConfig. Table schemas are generated from the JSON Schema specified in $path.</em> |
+| public static | <strong>generateAssetsFromSchema(</strong><em>[\JsonTables\Schema\Schema](#class-jsontablesschemaschema)</em> <strong>$schema</strong>, <em>array</em> <strong>$dbConfig</strong>)</strong> : <em>void</em><br /><em>Generates tables for the database specified in $dbConfig. Table schemas are generated from a JsonSchema object</em> |
+
+<hr /> 
+### Class: \JsonTables\Database\FieldOptionsTranslator
+
+> Class FieldOptionsTranslator Translates Schema\FieldOptions object to array of portable options for Doctrine DBAL
+
+| Visibility | Function |
+|:-----------|:---------|
+| public static | <strong>translate(</strong><em>[\JsonTables\Schema\FieldOptions](#class-jsontablesschemafieldoptions)</em> <strong>$fieldOptions</strong>)</strong> : <em>array Portable options for the Doctrine DBAL schema</em> |
 
 <hr /> 
 ### Class: \JsonTables\Database\AssetGenerator
@@ -216,6 +227,7 @@
 | public | <strong>check()</strong> : <em>void</em> |
 | public | <strong>getConstraints()</strong> : <em>[\JsonTables\Schema\Constraints](#class-jsontablesschemaconstraints)</em> |
 | public | <strong>getDescription()</strong> : <em>mixed/string</em> |
+| public | <strong>getFieldOptions()</strong> : <em>[\JsonTables\Schema\FieldOptions](#class-jsontablesschemafieldoptions)</em> |
 | public | <strong>getFormat()</strong> : <em>mixed</em> |
 | public | <strong>getName()</strong> : <em>mixed/string</em> |
 | public | <strong>getTitle()</strong> : <em>mixed/string</em> |
