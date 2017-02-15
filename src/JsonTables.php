@@ -33,7 +33,6 @@ class JsonTables
     public static function generateAssetsFromSchema(Schema $schema, $dbConfig)
     {
         $conn = DriverManager::getConnection($dbConfig);
-        $schema->check();
         $assetGenerator = new AssetGenerator($schema, $conn);
         $assetGenerator->generate();
     }

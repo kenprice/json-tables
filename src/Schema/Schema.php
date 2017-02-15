@@ -20,6 +20,7 @@ class Schema implements IValidate
     /**
      * Schema constructor. Builds schema from a JSON Schema
      * @param string $jsonSchema
+     * @throws Exceptions\InvalidJsonException
      */
     public function __construct(string $jsonSchema)
     {
@@ -30,6 +31,8 @@ class Schema implements IValidate
         }
 
         $this->populateTables($dictSchema);
+
+        $this->check();
     }
 
     /**
