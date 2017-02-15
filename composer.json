@@ -15,8 +15,7 @@
   },
   "require": {
     "marc-mabe/php-enum": "2.3.*",
-    "doctrine/dbal": "2.5.*",
-    "hassankhan/config": "^0.10.0"
+    "doctrine/dbal": "2.5.*"
   },
   "require-dev": {
     "phpunit/phpunit": "5.7.*",
